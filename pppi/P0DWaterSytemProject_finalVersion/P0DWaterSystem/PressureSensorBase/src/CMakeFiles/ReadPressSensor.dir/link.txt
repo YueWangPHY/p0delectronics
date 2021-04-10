@@ -1,0 +1,2 @@
+/usr/bin/ar cr libReadPressSensor.a  CMakeFiles/ReadPressSensor.dir/ReadPressureSensors.cxx.o
+/usr/bin/ranlib libReadPressSensor.a

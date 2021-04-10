@@ -1,0 +1,113 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <mutex>
+#include <thread>
+#include <cstdlib> 
+#include <ctime>
+#include <unistd.h>
+#include "CentralBase.h"
+#include "GlobalBase.h"
+
+int main()
+{
+	std::cout<<"which operation want to do? 1 is fill and 3 is drain"<<std::endl;
+	int operation = -1;
+	std::cin>>operation;
+	for(int crazy=0;crazy<3;crazy++)
+	{
+	int i=0;
+	while(true)
+	{
+		srand((unsigned)time(0)); 
+		int random_integer = rand(); 
+		std::cout << random_integer << std::endl; 
+
+		{
+			std::lock_guard<std::mutex> lock(lockfile);
+//			std::unique_lock<std::mutex> lock(lockfile);
+			std::cout<<"inlock"<<std::endl;
+//			std::ofstream *f1 = new std::ofstream("/home/pi/P0DWaterSytemProject/P0DWaterSytem/CentrolControlSector/src/generatedDepth.txt");
+			std::ofstream f1("/home/pi/P0DWaterSytemProject/P0DWaterSytem/CentrolControlSector/src/generatedDepth.txt");
+			//("generatedDepth.txt");
+//			f1.open("generatedDepth.txt");
+			if(f1.is_open())
+			{
+				f1<<GetCurrentTime()<<std::endl;	
+				if(operation==1)
+				{
+					for(int ibag=0;ibag<50;ibag++)
+					{
+						if(ibag == i)
+							f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<0<<std::endl;
+						else
+							f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<(int)rand()/10000<<std::endl;
+						for(int iii=0; iii<5000000; iii++)
+							int fun=iii;
+					}
+				}
+				if(operation==3)
+				{
+					for(int ibag=0;ibag<50;ibag++)
+					{
+						if(ibag == i)
+							f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<200<<std::endl;
+						else
+							f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<(int)rand()%100<<std::endl;
+					}
+				}
+			}
+			else
+				std::cout<<"cannot open file"<<std::endl;
+			f1.close();
+//			sleep(2);
+
+//			lock.unlock();
+		}
+		
+		sleep(2);
+		i++;
+		if(i>16)
+			break;
+	}
+	}
+
+        {
+            std::lock_guard<std::mutex> lock(lockfile);
+//          std::unique_lock<std::mutex> lock(lockfile);
+            std::cout<<"inlock"<<std::endl;
+//          std::ofstream *f1 = new std::ofstream("/home/pi/P0DWaterSytemProject/P0DWaterSytem/CentrolControlSector/src/generatedDepth.txt");
+            std::ofstream f1("/home/pi/P0DWaterSytemProject/P0DWaterSytem/CentrolControlSector/src/generatedDepth.txt");
+            //("generatedDepth.txt");
+//          f1.open("generatedDepth.txt");
+            if(f1.is_open())
+            {
+                f1<<GetCurrentTime()<<std::endl;
+				if(operation==1)
+				{
+					for(int ibag=0;ibag<50;ibag++)
+					{
+					   f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<2000<<std::endl;
+					}
+				}
+				if(operation==3)
+				{
+					for(int ibag=0;ibag<50;ibag++)
+					{
+					   f1<<std::setw(2)<<ibag+1<<" "<<std::setw(2)<<15<<std::endl;
+					}
+				}
+
+            }
+            else
+                std::cout<<"cannot open file"<<std::endl;
+            f1.close();
+//          sleep(2);
+
+//          lock.unlock();
+        }
+   
+ 
+	
+}
+

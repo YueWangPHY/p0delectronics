@@ -1,0 +1,34 @@
+#!/bin/bash
+
+fillexe=""
+for s in ${BUILDDIR}/FillCentral \ 
+		${BUILDDIR}/src/FillCentral ; do
+if [ -f ${s} ]
+then
+	fillexe=${s}
+fi
+done
+
+if [ ${fillexe}="" ]
+then
+	echo no executable program to fill
+	return;
+fi
+
+#echo Going to run ${fillexe}
+
+#echo Going to run ${fillexe}
+
+$iarg=0;
+foreach (@ARGV){
+    if( $iarg % 2 == 1) {$iarg++; next;}
+    if($_ eq '--up' ) {$maxlevel = $ARGV[$iarg+1]; }
+
+
+}
+
+
+	
+
+
+

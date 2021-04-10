@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/RelayBase/include/bcm2835.h
+stdint.h
+-
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/RelayBase/include/piplate.h
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/RelayBase/src/piplate.c
+linux/types.h
+-
+linux/spi/spidev.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+sys/ioctl.h
+-
+sys/mman.h
+-
+time.h
+-
+fcntl.h
+-
+string.h
+-
+stdio.h
+-
+bcm2835.h
+-
+piplate.h
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/RelayBase/src/piplate.h
+

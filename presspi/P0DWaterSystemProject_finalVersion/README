@@ -1,0 +1,20 @@
+1. to compile and build, 
+	source setup.sh
+	cd build
+	cmake ../P0DWaterSystem
+	make
+
+2. To measure depth, MeasureDepth
+	argument:
+	-pr period between each turn of measurements. in the unit of sec
+	 -jobdir where to store files of measured depth. Files will be saved every one hour. The default one is the directory storeDepth
+
+2. after compilation and build, to run,
+	source setup.sh
+	FillP0DWater -up maxdepth
+
+
+3. MOnitor and top off water if needed
+	MonitorP0DWater -up maxdepth 
+	when the water level in a bag is lower than maxdepth for crtain value(30mm in default in the program),fill that bag
+

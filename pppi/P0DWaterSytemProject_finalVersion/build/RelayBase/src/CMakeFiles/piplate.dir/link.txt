@@ -1,0 +1,2 @@
+/usr/bin/ar cr libpiplate.a  CMakeFiles/piplate.dir/piplate.c.o
+/usr/bin/ranlib libpiplate.a

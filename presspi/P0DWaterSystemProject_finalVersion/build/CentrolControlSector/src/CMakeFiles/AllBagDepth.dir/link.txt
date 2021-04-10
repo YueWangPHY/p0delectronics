@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/AllBagDepth.dir/AllBagDepth.cxx.o  -o AllBagDepth -rdynamic ../../Base/src/libGlobalBase.a ../../PressureSensorBase/src/libReadPressSensor.a -pthread 

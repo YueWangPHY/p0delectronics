@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/Central.dir/Central.cxx.o  -o Central -rdynamic ../../Base/src/libGlobalBase.a -pthread 

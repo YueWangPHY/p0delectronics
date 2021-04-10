@@ -1,0 +1,115 @@
+#define ASIO_STANDALONE
+
+#include <asio.hpp>
+#include <thread>
+#include <mutex>
+#include <chrono>
+#include <memory>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+#include "RelayReceiver.h"
+#include "InterpretCMD.h"
+#include "InterpretBag.h"
+#include "ActionForRealyBasedonCMD.h"
+
+std::mutex iostream_lock;
+std::mutex OpenSequence_lock;
+std::mutex CloseSequence_lock;
+//std::vector<std::mutex> glocks;
+
+
+const int NcmdSimul=2;
+const int NRelayOpenSimul = 2;
+const int countTime = 2; //sec
+
+
+//std::mutex glocks[NcmdSimul];
+//std::vector<std::pair<int, bool>> ActionSequence;
+
+void Receive_Thread(std::vector<std::string> *ReceivedMessages)
+{
+    std::cout<<"Inside Receive"<<std::endl;
+    try{
+        asio::io_service io_service;
+        std::cout<<"construct a ioserveice"<<std::endl;
+        RelayReceiver receive(io_service,ReceivedMessages);
+        std::cout<<"construct a receive object"<<std::endl;
+        io_service.run();
+//      std::cout<<"io service run"<<std::endl;
+        std::cout<<"just after run, msgsize = "<<(*ReceivedMessages).size()<<std::endl;
+    }
+    catch (std::exception& e){
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
+
+    std::cout<<"in Receive Thread, msgsize = "<<(*ReceivedMessages).size()<<std::endl;
+}
+
+void FillOpenRelaySequence(std::vector<int> *p_OpenRelaySequence, int iBag)
+{
+//    std::lock_guard<std::mutex> lock(OpenSequence_lock);
+	std::cout<<"going to fill ibag = "<<iBag<<std::endl;
+    (*p_OpenRelaySequence).push_back(iBag);
+}
+
+void FillCloseRelaySequence(std::vector<int> *p_CloseRelaySequence, int iBag)
+{
+    std::lock_guard<std::mutex> lock(CloseSequence_lock);
+    (*p_CloseRelaySequence).push_back(iBag);
+}
+
+
+void FillRelayOperationSequence(std::vector<std::string>* ReceivedMessages,std::vector<int>* p_OpenRelaySequence)//,  std::vector<int> * p_CloseRelaySequence)
+{
+    std::cout<<"in action thread, msgsize = "<<(*ReceivedMessages).size()<<std::endl;
+
+    int oldtmpmsgsize = 0;
+
+    while(true)
+    {
+        if((*ReceivedMessages).size()==0)
+            continue;
+        std::vector<std::string> tmpstrVector = (*ReceivedMessages);
+        int tmpmsgsize = tmpstrVector.size();
+
+        if(oldtmpmsgsize==tmpmsgsize)
+            continue;
+        if(tmpmsgsize==0)
+            continue;
+
+        for(int i=0;i<tmpmsgsize-oldtmpmsgsize;i++)
+        {
+            std::pair<int, bool> operation = OneActionOnRelay(tmpstrVector[i+oldtmpmsgsize]);
+            if(operation.first<1||operation.first>NBags)
+                continue;
+			if(operation.second==1)
+                FillOpenRelaySequence(p_OpenRelaySequence,operation.first);
+        }
+
+        if(tmpstrVector[tmpmsgsize-1]=="AllDone")
+            break;
+        oldtmpmsgsize = tmpmsgsize;
+
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+}
+
+
+
+int main()
+{
+	std::vector<std::string> msg;
+	std::vector<int> OpenRelaySequence;	
+	std::vector<std::thread> threads;
+	threads.emplace_back(std::thread(Receive_Thread,&msg));
+	threads.emplace_back(std::thread(FillRelayOperationSequence,&msg,&OpenRelaySequence));
+    for(std::thread& tm : threads){
+        if(tm.joinable())
+            tm.join();
+    }
+
+}

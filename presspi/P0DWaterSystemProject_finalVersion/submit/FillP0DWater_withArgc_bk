@@ -1,0 +1,30 @@
+#!/bin/bash
+
+fillexe=""
+for s in ${BUIDDIR}/FillCentral \
+        ${BUIDDIR}/CentrolControlSector/FillCentral \
+        ${BUILDDIR}/CentrolControlSector/src/FillCentral ; do
+
+if [ -f ${s} ]
+then
+    echo fillexe=${s}
+fi
+done
+
+
+if [ ${fillexe}=="" ]
+then
+    echo no executable program to fill
+fi
+
+#echo Going to run ${fillexe}
+
+if [ $1=="-up"]
+then
+	$maxlevel = $2
+fi
+
+echo $maxlevel
+
+#while getopts  
+

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+fillexe=""
+for s in ${BUIDDIR}/AllBagDepth \
+        ${BUIDDIR}/CentrolControlSector/AllBagDepth \
+        ${BUILDDIR}/CentrolControlSector/src/AllBagDepth ; do
+
+if [ -f ${s} ]
+then
+    fillexe=${s}
+	echo ${fillexe}
+fi
+done
+
+echo Going to run ${fillexe}
+
+#when get more time, change it from the squence to match -pr, -jobdir without caring squence
+
+period=5
+if [ $1=="-pr" ]
+then
+    period=$2
+else
+	period=5
+	echo we are here
+fi
+
+
+
+echo ${STOREDIR}
+depthloca=${STOREDIR}
+#if [ $3=="-jobdir" ]
+#then
+#	depthloca=$4
+#fi
+
+echo  $period
+echo ${depthloca}
+${fillexe} $period $depthloca
+

@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/include/Interface.h
+iostream
+-
+string
+-
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/include/piplate.h
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/src/relayOn.cxx
+unistd.h
+-
+iostream
+-
+string
+-
+stdio.h
+-
+piplate.h
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/src/piplate.h
+Interface.h
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/src/Interface.h
+

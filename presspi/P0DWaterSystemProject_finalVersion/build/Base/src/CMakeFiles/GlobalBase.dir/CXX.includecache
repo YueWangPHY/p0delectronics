@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/Base/include/GlobalBase.h
+iostream
+-
+string
+-
+ctime
+-
+chrono
+-
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/Base/src/GlobalBase.cxx
+GlobalBase.h
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/Base/src/GlobalBase.h
+

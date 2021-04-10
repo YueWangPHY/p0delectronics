@@ -1,0 +1,3 @@
+ReadSingleBag /AllBags are moved to PressureSensorSector. Here only ReadPressureSensor is kept to set the interference btw user and low level electronics. 
+
+ReadSingleSensor is the test code with the argument of board and channel id 

@@ -1,0 +1,8 @@
+/home/pi/P0DWaterSytemProject_finalVersion/build/PiPlateSector/src/CMakeFiles/FillPiPlate.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/Base/src/CMakeFiles/GlobalBase.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/RelayBase/src/CMakeFiles/InitPiPlate.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/PiPlateSector/src/CMakeFiles/loopRelays_test.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/RelayBase/src/CMakeFiles/piplate.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/RelayBase/src/CMakeFiles/relayOff.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/RelayBase/src/CMakeFiles/relayOn.dir
+/home/pi/P0DWaterSytemProject_finalVersion/build/Base/src/CMakeFiles/testBase.dir

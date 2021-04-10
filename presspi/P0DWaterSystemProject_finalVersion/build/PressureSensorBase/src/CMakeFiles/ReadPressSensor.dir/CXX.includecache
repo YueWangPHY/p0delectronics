@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/PressureSensorBase/include/ReadPressureSensors.h
+linux/i2c-dev.h
+-
+fcntl.h
+-
+unistd.h
+-
+
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/PressureSensorBase/src/ReadPressureSensors.cxx
+linux/i2c-dev.h
+-
+fcntl.h
+-
+unistd.h
+-
+cmath
+-
+iostream
+-
+fstream
+-
+cstdlib
+-
+stdexcept
+-
+vector
+-
+string
+-
+ReadPressureSensors.h
+/home/pi/P0DWaterSystemProject_finalVersion/P0DWaterSystem/PressureSensorBase/src/ReadPressureSensors.h
+

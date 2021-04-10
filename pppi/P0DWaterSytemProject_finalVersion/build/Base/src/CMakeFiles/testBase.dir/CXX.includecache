@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/include/GlobalBase.h
+iostream
+-
+string
+-
+ctime
+-
+chrono
+-
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/include/InterpretCMD.h
+iostream
+-
+string
+-
+vector
+-
+chrono
+-
+ctime
+-
+GlobalBase.h
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/include/GlobalBase.h
+
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/src/test.cxx
+GlobalBase.h
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/src/GlobalBase.h
+InterpretCMD.h
+/home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/Base/src/InterpretCMD.h
+iostream
+-
+thread
+-
+chrono
+-
+

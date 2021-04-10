@@ -1,0 +1,21 @@
+#add_library()
+#target_link_libraries(PSAction ${CMAKE_BINARY_DIR}/Basic/src/libBasic.a -pthread)
+#add_compile_options(-g -O0 -std=c++11 -pthread)
+
+add_executable(CCTest CCTest.cxx)
+target_link_libraries(CCTest -pthread) 
+#target_link_libraries(PSTest ${CMAKE_BINARY_DIR}/Basic/src/libBasic.a 
+#target_link_libraries(PSTest ${CMAKE_BINARY_DIR}/Base/src/libGlobalBase.a 
+#							${CMAKE_BINARY_DIR}/PressureSensorBase/src/libReadPressSensor.a -pthread)
+add_executable(Central Central.cxx)
+target_link_libraries(Central ${CMAKE_BINARY_DIR}/Base/src/libGlobalBase.a -pthread) 
+
+add_executable(FillCentral FillCentral.cxx)
+target_link_libraries(FillCentral ${CMAKE_BINARY_DIR}/Base/src/libGlobalBase.a -pthread) 
+
+add_executable(DrainCentral DrainCentral.cxx)
+target_link_libraries(DrainCentral ${CMAKE_BINARY_DIR}/Base/src/libGlobalBase.a -pthread) 
+
+
+add_executable(writeDepth writeDepth.cxx)
+target_link_libraries(writeDepth ${CMAKE_BINARY_DIR}/Base/src/libGlobalBase.a -pthread) 

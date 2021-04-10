@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/writeDepth.dir/writeDepth.cxx.o  -o writeDepth -rdynamic ../../Base/src/libGlobalBase.a -pthread 

@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/loopRelays_test.dir/loopRelays_test.cxx.o  -o loopRelays_test -rdynamic ../../Base/src/libGlobalBase.a ../../RelayBase/src/libpiplate.a /home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/lib/libbcm2835.a -pthread 

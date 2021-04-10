@@ -1,0 +1,28 @@
+#!/bin/bash
+
+fillexe=""
+for s in ${BUIDDIR}/FillCentral \
+        ${BUIDDIR}/CentrolControlSector/FillCentral \
+        ${BUILDDIR}/CentrolControlSector/src/FillCentral ; do
+
+if [ -f ${s} ]
+then
+    fillexe=${s}
+	echo ${fillexe}
+fi
+done
+
+echo Going to run ${fillexe}
+
+#argu=$1
+if [ $1=="-up" ]
+then
+    maxlevel=$2
+fi
+
+echo $maxlevel
+
+#while getopts
+
+${fillexe} $maxlevel
+

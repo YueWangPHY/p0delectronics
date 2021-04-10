@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/PSTest.dir/PSTest.cxx.o  -o PSTest -rdynamic ../../Base/src/libGlobalBase.a ../../PressureSensorBase/src/libReadPressSensor.a -pthread 

@@ -1,0 +1,199 @@
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <chrono>
+#include <cmath>
+#include <cstdlib>
+#include <stdexcept>
+#include <string>
+#include <stdio.h>
+#include <mutex>
+#include <thread>
+
+#include <linux/i2c-dev.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include "config.h"
+#include "GlobalBase.h"
+#include "InterpretBag_PS.h"
+#include "ReadPressureSensors.h"
+#include "CentralBase.h"
+
+#ifndef I2C_DEVICE
+#define I2C_DEVICE "/dev/i2c-1"
+#endif
+
+#define ASIO_STANDALONE
+//#define ASIO_HAS_BOOST_DATE_TIME
+#include "asio.hpp"
+
+//std::mutex lockfile;
+
+
+//void print(const asio::error_code& error, std::shared_ptr<asio::steady_timer> t, int *count)//(const boost::system::error_code& error)
+void print(std::shared_ptr<asio::steady_timer> t, int *count)//(const boost::system::error_code& error)
+{
+
+	if (*count < 5)
+	{
+		std::cout << *count << std::endl;
+		++(*count);
+
+//		t->expires_at(t->expires_at() + std::chrono::seconds(1));
+//		t->async_wait(bind(print,std::placeholders::_1, t, count));
+		t->expires_from_now(std::chrono::seconds(1));
+		t->wait();
+		print(t, count);
+	  }
+
+}
+
+
+//void ReadDepth(const asio::error_code& error, std::shared_ptr<asio::steady_timer> ptr_t, std::string fileName, int* lowestBag, int* lowestDepth)//, std::shared_ptr<asio::io_service> ptr_io)
+void ReadDepth(std::shared_ptr<asio::steady_timer> ptr_t, std::string fileName, int* lowestBag, int* lowestDepth, asio::io_service* io)//, std::shared_ptr<asio::io_service> ptr_io)
+{
+	std::cout<<fileName<<std::endl;
+//	std::ifstream inputfile;//(fileName.c_str());	
+//	int lowestBag = -1, lowestDepth = 2100;//in unit of mm
+	std::string eachline = "";
+	std::string currentTime = "";
+	std::vector<std::string>  filecontent;
+	filecontent.clear();
+	int linecounter = 0;
+	{
+		std::lock_guard<std::mutex> lock(lockfile);
+		currentTime = GetCurrentTime();
+
+		std::ifstream inputfile(fileName.c_str());	
+
+//		inputfile.open(fileName.c_str());
+
+		if(inputfile.is_open())
+		{
+			while(getline(inputfile, eachline))//filecontent[linecounter]))
+			{
+				filecontent.push_back(eachline);
+//				linecounter++;
+			}
+//			getline(inputfile, eachline);
+		}
+		else 
+			std::cout<<"CANNOT OPEN THE FILE"<<std::endl;
+
+		inputfile.close();
+	}		
+
+
+	if(GetTimeDifference(filecontent[0], currentTime)<0||GetTimeDifference(filecontent[0], currentTime)>120)
+	{
+        ptr_t->expires_from_now(std::chrono::seconds(5));//time to wait need to be changed after testing.
+        ptr_t->wait();
+        ReadDepth(ptr_t, fileName, lowestBag, lowestDepth, io);
+	}
+	else{
+		int bagId = -1;
+        int depth = -1;//in unit of mm
+		int size = filecontent.size();
+		for(int i=1; i<size; i++)
+        {
+            sscanf(filecontent[i].c_str(),"%d%*c%d",&bagId, &depth);
+            if(depth<(*lowestDepth))
+            {
+                *lowestDepth = depth;
+                *lowestBag = bagId;
+            }
+        }
+
+	}
+
+
+
+/*
+    if(GetTimeDifference(eachline, currentTime)<0||GetTimeDifference(eachline, currentTime)>120)//120s//check if the depth in the file is updated recently. 
+    {   
+        inputfile.close();//close the file to let the pressure sensors to write in the file again
+		////////////////////////////////
+		//something to do???///////////
+		///////////////////////////////	
+		ptr_t->expires_from_now(std::chrono::seconds(5));//time to wait need to be changed after testing.
+//	 	ptr_t->async_wait(bind(ReadDepth, std::placeholders::_1, ptr_t, fileName, lowestBag, lowestDepth));
+		ptr_t->wait();
+		ReadDepth(ptr_t, fileName, lowestBag, lowestDepth);
+    }
+	else
+	{
+		int bagId = -1;
+		int depth = -1;//in unit of mm 
+		while(getline(inputfile,eachline))
+		{
+			sscanf(eachline.c_str(),"%d%*c%d",&bagId, &depth);
+			if(depth<(*lowestDepth))
+			{
+				*lowestDepth = depth;
+				*lowestBag = bagId;
+			}
+		}
+	}
+	
+	inputfile.close();
+*/
+	io->post(std::bind(ReadDepth, ptr_t, fileName, lowestBag, lowestDepth, io));
+	return ; 
+
+}
+
+
+int Fib(int n)
+{
+	if(n==0)
+		return 1;
+	if(n==1)
+		return 1;
+	return Fib(n-1)+Fib(n-2);
+}	
+/*
+void SendMsg(short portSend, std::string message)
+{
+    const short portNo = portSend;
+    try{
+		asio:;io_service io
+        CentralSender send(io, portNo, message);
+        io.run();
+    }
+    catch(std::exception& e){
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
+    return 0;
+}
+*/
+int main()
+{
+
+    std::string inputName = "/home/pi/P0DWaterSytemProject/P0DWaterSytem/CentrolControlSector/src/generatedDepth.txt";//name of output file which stores the measured result
+	int count = 0;
+	int lowestBag = -1, lowestDepth = 2100;
+	asio::io_service io;
+	std::shared_ptr<asio::steady_timer> pt(new asio::steady_timer(io));//, std::chrono::seconds(3)));
+
+	ReadDepth(pt, inputName, &lowestBag, &lowestDepth, &io);	
+
+	io.run();
+
+	std::cout<<"lowestBag = "<<lowestBag<<std::endl;
+	std::cout<<"lowestDepth = "<<lowestDepth<<std::endl;
+
+	std::cout<<"finish..."<<std::endl;
+	return 0;
+
+}
+
+
+/*
+	readfileand then sendmsg
+	waitforreply(stop waiting after certain time and send StopNow50 to piplates.)
+	readfileand then send msg
+	waitforreply(stop waiting after certain time and send StopNow50 to piplates.)
+	...
+*/	
+ 

@@ -1,0 +1,5 @@
+add_library(ReadPressSensor ReadPressureSensors.cxx)
+
+add_executable(ReadSingleSensor ReadSingleSensor.cxx)
+target_link_libraries(ReadSingleSensor ReadPressSensor)
+

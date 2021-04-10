@@ -1,0 +1,19 @@
+#!/bin/bash
+
+fillexe=""
+for s in ${BUIDDIR}/FillPiPlate \
+        ${BUIDDIR}/PiPlateSector/FillPiPlate \
+        ${BUILDDIR}/PiPlateSector/src/FillPiPlate ; do
+
+if [ -f ${s} ]
+then
+    fillexe=${s}
+	echo ${fillexe}
+fi
+done
+
+echo Going to run ${fillexe}
+
+
+${fillexe}
+

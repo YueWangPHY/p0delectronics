@@ -1,0 +1,28 @@
+#!/bin/bash
+
+monitorexe=""
+for s in ${BUIDDIR}/MonitorCentral \
+        ${BUIDDIR}/CentrolControlSector/MonitorCentral \
+        ${BUILDDIR}/CentrolControlSector/src/MonitorCentral ; do
+
+if [ -f ${s} ]
+then
+    monitorexe=${s}
+	echo ${monitorexe}
+fi
+done
+
+echo Going to run ${monitorexe}
+
+#argu=$1
+if [ $1=="-up" ]
+then
+    maxlevel=$2
+fi
+
+echo $maxlevel
+
+#while getopts
+
+${monitorexe} $maxlevel
+

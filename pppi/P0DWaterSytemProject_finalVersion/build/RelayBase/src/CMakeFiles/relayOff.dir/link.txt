@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/relayOff.dir/relayOff.cxx.o  -o relayOff -rdynamic libpiplate.a /home/pi/P0DWaterSytemProject_finalVersion/P0DWaterSystem/RelayBase/lib/libbcm2835.a 

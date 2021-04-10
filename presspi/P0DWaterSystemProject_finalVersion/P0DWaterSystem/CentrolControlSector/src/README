@@ -1,0 +1,21 @@
+-----April 18, 2019
+FillCentral.cxx is Filling process in centralcontrolsector without measuring the depth thread. So to use this to fill water, user need to run AllBagDepth first to continusouly measure depth
+
+
+
+
+
+----------------------
+FillCentral.cxx and DrainCentral.cxx are based on Central.cxx
+ 
+************************
+
+In CentralAction.h, lines below should be uncomment:
+//two lines belows are commented fo now when we use pesudo pressure files. When we use real measured files, they should be uncomment.
+//      if(maxdepth-mindepth>MAXDEPTHDIFF)//no larger than NMAXDEPTHDIFF
+//          CentralSendAction(CreateCMD(COMMAND4PPSTART+6, 50));// in case some relays are not closed. ask them to close
+
+
+************************ 
+
+

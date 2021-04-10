@@ -1,0 +1,28 @@
+#!/bin/bash
+
+drainexe=""
+for s in ${BUIDDIR}/DrainCentral \
+        ${BUIDDIR}/CentrolControlSector/DrainCentral \
+        ${BUILDDIR}/CentrolControlSector/src/DrainCentral ; do
+
+if [ -f ${s} ]
+then
+    drainexe=${s}
+	echo ${drainexe}
+fi
+done
+
+echo Going to run ${drainexe}
+
+#argu=$1
+if [ $1=="-low" ]
+then
+    minlevel=$2
+fi
+
+echo $minlevel
+
+#while getopts
+
+${drainexe} $minlevel
+

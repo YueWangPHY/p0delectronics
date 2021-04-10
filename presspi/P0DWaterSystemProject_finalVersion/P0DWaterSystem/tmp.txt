@@ -1,0 +1,12 @@
+DEPTHMAXCUT input as an argement
+#put RELAYOPENTIMELENGTH to piplatesector , hard code it. DOn't putit as argument in case people typo
+
+Base is done except what mentioend above
+cmake is done
+PressureSensorBase is done
+RelayBase is done
+
+---April 16th, 2019
+in loopRelaystest, this a a variables called thisstack. As we changed the map to only include realys on the stack that this pi is connected. so this stack is not needed anymore
+
+besides, loopRelaytest is going to be renamed as 

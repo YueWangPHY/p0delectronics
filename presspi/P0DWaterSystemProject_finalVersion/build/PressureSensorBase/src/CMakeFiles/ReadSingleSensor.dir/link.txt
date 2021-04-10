@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/ReadSingleSensor.dir/ReadSingleSensor.cxx.o  -o ReadSingleSensor -rdynamic libReadPressSensor.a 
